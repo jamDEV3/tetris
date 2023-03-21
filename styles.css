@@ -4,10 +4,10 @@ body {
 #game-box {
     border: 3px solid chartreuse;
     margin: auto;
-    height: 600px;
+    height: 800px;
     width: 400px;
     vertical-align: middle;
-    margin-top: 450px;
+    margin-top: 200px;
 }
 
 table {
