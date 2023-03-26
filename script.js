@@ -1,6 +1,12 @@
 const possiblePieces  = ["t", "i", "s", "l"]; //array with the possible piece shapes
+
+let tStart = ["1d", "2c", "2d", "3d"];
+let iStart = ["1d", "2d", "3d", "4d"];
+let lStart = ["1c", "2c", "3c", "3d"];
+let sStart = ["1c", "2c", "2d", "3d"];
+let pieceCurrentPosition = [];
 let currentPiece = pieceSelect(possiblePieces); //starting shape selection
-startPiece(currentPiece);   //startin shape display
+startPieceDisplay(currentPiece);   //startin shape display
 
 
 //event listener to detect which arrow key is pressed
@@ -13,44 +19,34 @@ document.addEventListener('keydown', (e) => {
         pieceRotationCounter();
     }
     if(e.key === 'ArrowLeft') {
-        pieceMoveLeft();
+        pieceMoveLeft(pieceCurrentPosition);
     }
     if (e.key === 'ArrowRight') {
         pieceMoveRight();
     }
     if (e.key === ' '){
         pieceDropDown();
-    }
-    
+    }    
 })
 
-
-//function to display the first piece once randomly detected
-function startPiece(shape) {
+//function to display the first piece once randomly selected
+function startPieceDisplay(shape) {
     switch (shape) {
         case "t":
-            highlightCell("1d");
-            highlightCell("2c");
-            highlightCell("2d");
-            highlightCell("3d");
+            pieceCurrentPosition = tStart;
+            highlightPiece(tStart);
             break;
         case "i":
-            highlightCell("1d");
-            highlightCell("4d");
-            highlightCell("2d");
-            highlightCell("3d");
+            pieceCurrentPosition = iStart;
+            highlightPiece(iStart);
             break;
         case "l":
-            highlightCell("1c");
-            highlightCell("2c");
-            highlightCell("3c");
-            highlightCell("3d");
+            pieceCurrentPosition = lStart;
+            highlightPiece(lStart);
             break;
         case "s":
-            highlightCell("1c");
-            highlightCell("2c");
-            highlightCell("2d");
-            highlightCell("3d");
+            pieceCurrentPosition = sStart;
+            highlightPiece(sStart);
             break;            
     }
 }
@@ -59,6 +55,19 @@ function startPiece(shape) {
 function highlightCell(id) {
     document.getElementById(id).style.background = "chartreuse";
 }
+
+//function to restore the color of a cell
+function delightCell(id) {
+    document.getElementById(id).style.background = "cornflowerblue";
+}
+
+// function to highlite the piece
+function highlightPiece(pieceStart){
+    for (let i = 0; i < pieceStart.length; i++) {
+        highlightCell(pieceStart[i]);
+    }
+}
+
 //function to randomly pick aa shape from the array
 function pieceSelect(arr){
     let index;
@@ -73,9 +82,46 @@ function pieceRotationClock() {
 function pieceRotationCounter(){
 
 }
-function pieceMoveLeft(){
+function pieceMoveLeft(piece){
+    let currentCharArray = [];
+    let currentRowArray= [];
+    let newPiecePos = [];
+    let newCharArray = [];    
+    for (let i = 0; i < piece.length; i++) {  
 
-}
+        currentRowArray.push(piece[i].charAt(0));
+        currentCharArray.push(piece[i].charAt(1));
+        console.log(currentCharArray);
+        }
+
+    if (!currentCharArray.includes("a")) {        
+        for (let x = 0; x < currentCharArray.length; x++){
+            switch (currentCharArray[x]) {
+                case "b":
+                    newCharArray.push("a");
+                    break;
+                case "c":
+                    newCharArray.push("b");
+                    break;
+                case "d":
+                    newCharArray.push("c");
+                    break;
+                case "e":
+                    newCharArray.push("d");
+                    break;
+                case "f":
+                    newCharArray.push("e");
+            }        
+        }        
+    }
+    for (let j = 0; j < currentRowArray.length; j++) {
+        newPiecePos.push(currentRowArray[j]+newCharArray[j]);
+        console.log(newPiecePos);
+    } 
+    highlightPiece(newPiecePos);       
+
+    }
+
 function pieceMoveRight(){
 
 }
