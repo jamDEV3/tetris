@@ -5,6 +5,7 @@ let iStart = ["1d", "2d", "3d", "4d"];
 let lStart = ["1c", "2c", "3c", "3d"];
 let sStart = ["1c", "2c", "2d", "3d"];
 let pieceCurrentPosition = [];
+let newPosition = [];
 let currentPiece = pieceSelect(possiblePieces); //starting shape selection
 startPieceDisplay(currentPiece);   //startin shape display
 
@@ -20,6 +21,9 @@ document.addEventListener('keydown', (e) => {
     }
     if(e.key === 'ArrowLeft') {
         pieceMoveLeft(pieceCurrentPosition);
+        console.log(newPosition);
+        console.log(pieceCurrentPosition);
+        deLightPiece(pieceCurrentPosition, newPosition);
     }
     if (e.key === 'ArrowRight') {
         pieceMoveRight();
@@ -67,8 +71,21 @@ function highlightPiece(pieceStart){
         highlightCell(pieceStart[i]);
     }
 }
+//function to restore cells to normal color after a piece has been moved
+function deLightPiece(pieceStart, pieceEnd) {
+    let restoredCells = [];
+    for (let i=0; i<pieceStart.length; i++) {
+        if (!pieceEnd.inlcudes(String(pieceStart[i]))) {
+            console.log(pieceStart[i]);
+            console.log(pieceEnd[i]);
+            restoredCells.push(pieceStart[i]); 
+        }
+    for (let x = 0; x<restoredCells.length; x++)
+        delightCell(restoredCells[x]);
+    }
+}
 
-//function to randomly pick aa shape from the array
+//function to randomly pick a shape from the array
 function pieceSelect(arr){
     let index;
     index = Math.floor(Math.random() * arr.length);
@@ -116,10 +133,10 @@ function pieceMoveLeft(piece){
     }
     for (let j = 0; j < currentRowArray.length; j++) {
         newPiecePos.push(currentRowArray[j]+newCharArray[j]);
-        console.log(newPiecePos);
+        
     } 
     highlightPiece(newPiecePos);       
-
+    newPosition = newPiecePos;
     }
 
 function pieceMoveRight(){
