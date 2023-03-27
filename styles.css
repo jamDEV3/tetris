@@ -1,0 +1,22 @@
+body {
+    background-color: cornflowerblue;
+}
+#game-box {
+    border: 3px solid chartreuse;
+    margin: auto;
+    height: 800px;
+    width: 400px;
+    vertical-align: middle;
+    margin-top: 200px;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    border: 1px solid chartreuse;
+    empty-cells: show;
+}
+tr, td {
+    empty-cells: show;
+    border: 1px solid chartreuse;
+}
