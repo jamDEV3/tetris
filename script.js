@@ -13,24 +13,32 @@ startPieceDisplay(currentPiece);   //startin shape display
 //event listener to detect which arrow key is pressed
 document.addEventListener('keydown', (e) => {
     e = e || window.event;
+
     if (e.key === 'ArrowUp') {
         pieceRotationClock();
     }
+
+    // Thinking about using setInterval with the pieceGravity() function to update it, currently just using this condition as a placeholder
     if(e.key === 'ArrowDown') {
-        pieceRotationCounter();
+        pieceGravity(pieceCurrentPosition);
+        deLightPiece(pieceCurrentPosition, newPosition);
+        pieceCurrentPosition = newPosition;
     }
     if(e.key === 'ArrowLeft') {
         pieceMoveLeft(pieceCurrentPosition);
-        console.log(newPosition);
-        console.log(pieceCurrentPosition);
         deLightPiece(pieceCurrentPosition, newPosition);
+        pieceCurrentPosition = newPosition;
     }
     if (e.key === 'ArrowRight') {
-        pieceMoveRight();
+        pieceMoveRight(pieceCurrentPosition);
+        deLightPiece(pieceCurrentPosition, newPosition);
+        pieceCurrentPosition = newPosition;
     }
     if (e.key === ' '){
         pieceDropDown();
     }    
+
+    console.log(pieceCurrentPosition);
 })
 
 //function to display the first piece once randomly selected
@@ -74,10 +82,10 @@ function highlightPiece(pieceStart){
 //function to restore cells to normal color after a piece has been moved
 function deLightPiece(pieceStart, pieceEnd) {
     let restoredCells = [];
+
     for (let i=0; i<pieceStart.length; i++) {
-        if (!pieceEnd.inlcudes(String(pieceStart[i]))) {
-            console.log(pieceStart[i]);
-            console.log(pieceEnd[i]);
+        notIncludes = !pieceEnd.includes(pieceStart[i]);
+        if (notIncludes == true) {
             restoredCells.push(pieceStart[i]); 
         }
     for (let x = 0; x<restoredCells.length; x++)
@@ -100,6 +108,7 @@ function pieceRotationCounter(){
 
 }
 function pieceMoveLeft(piece){
+
     let currentCharArray = [];
     let currentRowArray= [];
     let newPiecePos = [];
@@ -108,7 +117,7 @@ function pieceMoveLeft(piece){
 
         currentRowArray.push(piece[i].charAt(0));
         currentCharArray.push(piece[i].charAt(1));
-        console.log(currentCharArray);
+        // console.log(currentCharArray);
         }
 
     if (!currentCharArray.includes("a")) {        
@@ -135,17 +144,117 @@ function pieceMoveLeft(piece){
         newPiecePos.push(currentRowArray[j]+newCharArray[j]);
         
     } 
-    highlightPiece(newPiecePos);       
+    highlightPiece(newPiecePos);
+        
     newPosition = newPiecePos;
+    
     }
 
-function pieceMoveRight(){
+function pieceMoveRight(piece){
+
+    let currentCharArray = [];
+    let currentRowArray= [];
+    let newPiecePos = [];
+    let newCharArray = [];    
+    for (let i = 0; i < piece.length; i++) {  
+
+        currentRowArray.push(piece[i].charAt(0));
+        currentCharArray.push(piece[i].charAt(1));
+        // console.log(currentCharArray);
+        }
+
+    if (!currentCharArray.includes("f")) {        
+        for (let x = 0; x < currentCharArray.length; x++){
+            switch (currentCharArray[x]) {
+                case "a":
+                    newCharArray.push("b");
+                    break;
+                case "b":
+                    newCharArray.push("c");
+                    break;
+                case "c":
+                    newCharArray.push("d");
+                    break;
+                case "d":
+                    newCharArray.push("e");
+                    break;
+                case "e":
+                    newCharArray.push("f");
+            }        
+        }        
+    }
+    for (let j = 0; j < currentRowArray.length; j++) {
+        newPiecePos.push(currentRowArray[j]+newCharArray[j]);
+        
+    } 
+    highlightPiece(newPiecePos);    
+    newPosition = newPiecePos;
 
 }
 function pieceDropDown() {
 
 }
 
-function pieceGravity(){
+function pieceGravity(piece){
+
+    let currentCharArray = [];
+    let currentRowArray= [];
+    let newPiecePos = [];
+    let newRowArray = [];    
+    for (let i = 0; i < piece.length; i++) {  
+
+        // Note: Piece can only drop to 9 without problems, need to find how to add two characters for 10+ row position
+        currentRowArray.push(piece[i].charAt(0));
+        currentCharArray.push(piece[i].charAt(1));
+        console.log(currentRowArray);
+        }
+
+    if (!currentRowArray.includes("12")) {        
+        for (let x = 0; x < currentRowArray.length; x++){
+            switch (currentRowArray[x]) {
+                case "1":
+                    newRowArray.push("2");
+                    break;
+                case "2":
+                    newRowArray.push("3");
+                    break;
+                case "3":
+                    newRowArray.push("4");
+                    break;
+                case "4":
+                    newRowArray.push("5");
+                    break;
+                case "5":
+                    newRowArray.push("6");
+                    break;
+                case "6":
+                    newRowArray.push("7");
+                    break;
+                case "7":
+                    newRowArray.push("8");
+                    break;
+                case "8":
+                    newRowArray.push("9");
+                    break;
+                case "9":
+                    newRowArray.push("10");
+                    break;
+                case "10":
+                    newRowArray.push("11");
+                    break;
+                case "11":
+                    newRowArray.push("12");
+                    break;
+                
+            }        
+        }        
+    }
+    for (let j = 0; j < currentCharArray.length; j++) {
+        newPiecePos.push(newRowArray[j]+currentCharArray[j]);
+        
+    }
+
+    highlightPiece(newPiecePos);    
+    newPosition = newPiecePos;
 
 }
