@@ -6,7 +6,7 @@ body {
     margin: auto;
     height: 800px;
     width: 400px;
-    vertical-align: middle;
+    vertical-align: top;
     margin-top: 200px;
 }
 
@@ -19,4 +19,13 @@ table {
 tr, td {
     empty-cells: show;
     border: 1px solid chartreuse;
+}
+
+@media all and (max-width: 700px) {
+    #game-box {
+        height: 450px;
+        width: 180px;
+
+    }
+    
 }
